@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
 from PIL import Image
-class cube():
+class Cube():
     def __init__(self):
         self.state = {'up':np.array([['w', 'w', 'w'], ['w', 'w', 'w'], ['w', 'w', 'w']]),
                 'front':np.array([['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]),
@@ -115,29 +115,3 @@ class cube():
         self.state['back'][:, 2] = temp['back'][0, :]
         self.state['back'][2, :] = temp['back'][:, 2][::-1]
 
-
-c = cube()
-while True:
-    print("1. Show face\n2. Move\n3. Exit")
-    x = int(input())
-    if x==1:
-        print("Which face?")
-        y = input()
-        c.disp(y)
-    if x==2:
-        y = input()
-        for move in y:
-            if move=='f' or move=='F':
-                c.front()
-            if move=='r' or move=='R':
-                c.right()
-            if move=='u' or move=='U':
-                c.up()
-            if move=='l' or move=='L':
-                c.left()
-            if move=='d' or move=='D':
-                c.down()
-            if move=='b' or move=='b':
-                c.back()
-    if x==3:
-        break
