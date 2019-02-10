@@ -1,6 +1,8 @@
 import numpy as np
 import copy
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
 from PIL import Image
 class cube():
     def __init__(self):
@@ -13,23 +15,26 @@ class cube():
     def disp(self, face):
         def show(color):
             if color == 'r':
-                img = Image.new('RGB', (10, 10), color='red')
+                img = Image.new('RGB', (30, 30), color='red')
             elif color == 'b':
-                img = Image.new('RGB', (10, 10), color='blue')
+                img = Image.new('RGB', (30, 30), color='blue')
             elif color == 'g':
-                img = Image.new('RGB', (10, 10), color='green')
+                img = Image.new('RGB', (30, 30), color='green')
             elif color == 'o':
-                img = Image.new('RGB', (10, 10), color='orange')
+                img = Image.new('RGB', (30, 30), color='orange')
             elif color == 'w':
-                img = Image.new('RGB', (10, 10), color='white')
+                img = Image.new('RGB', (30, 30), color='white')
             elif color == 'y':
-                img = Image.new('RGB', (10, 10), color='yellow')
+                img = Image.new('RGB', (30, 30), color='yellow')
             return img
+
         fig, ax = plt.subplots(3, 3)
         for i in range(3):
             for j in range(3):
+                ax[i][j].set_xticklabels([])
+                ax[i][j].set_yticklabels([])
                 img = show(self.state[face][i][j])
-                ax[i][j].imshow(img)
+                ax[i][j].imshow(img, interpolation='none')
         fig.show()
 
     def right(self):
@@ -109,3 +114,30 @@ class cube():
         self.state['back'][:, 0] = temp['back'][2, :]
         self.state['back'][:, 2] = temp['back'][0, :]
         self.state['back'][2, :] = temp['back'][:, 2][::-1]
+
+
+c = cube()
+while True:
+    print("1. Show face\n2. Move\n3. Exit")
+    x = int(input())
+    if x==1:
+        print("Which face?")
+        y = input()
+        c.disp(y)
+    if x==2:
+        y = input()
+        for move in y:
+            if move=='f' or move=='F':
+                c.front()
+            if move=='r' or move=='R':
+                c.right()
+            if move=='u' or move=='U':
+                c.up()
+            if move=='l' or move=='L':
+                c.left()
+            if move=='d' or move=='D':
+                c.down()
+            if move=='b' or move=='b':
+                c.back()
+    if x==3:
+        break
