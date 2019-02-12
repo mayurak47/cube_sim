@@ -6,6 +6,7 @@ import random
 
 from PIL import Image
 class Cube():
+    faces = ['front', 'back', 'up', 'down', 'left', 'right']
     def __init__(self):
         self.reset()
     def reset(self):
@@ -38,6 +39,7 @@ class Cube():
                 ax[i][j].set_yticklabels([])
                 img = show(self.state[face][i][j])
                 ax[i][j].imshow(img, interpolation='none')
+        fig.suptitle(face.capitalize())
         fig.show()
 
     def right(self):
@@ -118,6 +120,83 @@ class Cube():
         self.state['back'][:, 2] = temp['back'][0, :]
         self.state['back'][2, :] = temp['back'][:, 2][::-1]
 
+    def r_prime(self):
+        self.right()
+        self.right()
+        self.right()
+
+    def f_prime(self):
+        self.front()
+        self.front()
+        self.front()
+
+    def u_prime(self):
+        self.up()
+        self.up()
+        self.up()
+
+    def d_prime(self):
+        self.down()
+        self.down()
+        self.down()
+
+    def l_prime(self):
+        self.left()
+        self.left()
+        self.left()
+
+    def b_prime(self):
+        self.back()
+        self.back()
+        self.back()
+
+    def perform(self, moves):
+        for move in moves:
+            if move=="R":
+                self.right()
+            if move=="R2":
+                self.right()
+                self.right()
+            if move=="R'":
+                self.r_prime()
+            if move=="L":
+                self.left()
+            if move=="L2":
+                self.left()
+                self.left()
+            if move=="L'":
+                self.l_prime()
+            if move=="F":
+                self.front()
+            if move=="F2":
+                self.front()
+                self.front()
+            if move=="F'":
+                self.f_prime()
+            if move=="U":
+                self.up()
+            if move=="U2":
+                self.up()
+                self.up()
+            if move=="U'":
+                self.u_prime()
+            if move=="D":
+                self.down()
+            if move=="D2":
+                self.down()
+                self.down()
+            if move=="D'":
+                self.d_prime()
+            if move=="B":
+                self.back()
+            if move=="B2":
+                self.back()
+                self.back()
+            if move=="B'":
+                self.b_prime()
+            print(move, end=" ")
+        print()
+
     def locate_edge(self, cols):
         if self.state['front'][1][2] == cols[0] and self.state['right'][1][0] == cols[1]:
             return ("front", "right")
@@ -190,59 +269,178 @@ class Cube():
                 while scramble[i-1][0] == moves[x][0]:
                     x = random.randint(0, 17)
                 scramble.append(moves[x])
-        for move in scramble:
-            if move=="R":
-                self.right()
-            if move=="R2":
-                self.right()
-                self.right()
-            if move=="R'":
-                self.right()
-                self.right()
-                self.right()
-            if move=="L":
-                self.left()
-            if move=="L2":
-                self.left()
-                self.left()
-            if move=="L'":
-                self.left()
-                self.left()
-                self.left()
-            if move=="F":
-                self.front()
-            if move=="F2":
-                self.front()
-                self.front()
-            if move=="F'":
-                self.front()
-                self.front()
-                self.front()
-            if move=="U":
-                self.up()
-            if move=="U2":
-                self.up()
-                self.up()
-            if move=="U'":
-                self.up()
-                self.up()
-                self.up()
-            if move=="D":
-                self.down()
-            if move=="D2":
-                self.down()
-                self.down()
-            if move=="D'":
-                self.down()
-                self.down()
-                self.down()
-            if move=="B":
-                self.back()
-            if move=="B2":
-                self.back()
-                self.back()
-            if move=="B'":
-                self.back()
-                self.back()
-                self.back()
-        return scramble
+        self.perform(scramble)
+
+    def cross(self):
+        def solve_w_b():
+            pos = self.locate_edge(('w', 'b'))
+            if pos == ("front", "right"):
+                self.perform(["F2", "L'"])
+            elif pos == ("right", "front"):
+                self.perform(["F'", "U"])
+            elif pos == ("front", "left"):
+                self.perform(["L'"])
+            elif pos == ("left", "front"):
+                self.perform(["F", "U"])
+            elif pos == ("back", "right"):
+                self.perform(["R'", "U2"])
+            elif pos == ("right", "back"):
+                self.perform(["B", "U'"])
+            elif pos == ("back", "left"):
+                self.perform(["L"])
+            elif pos == ("left", "back"):
+                self.perform(["B'", "U'"])
+            elif pos == ("down", "left"):
+                self.perform(["L2"])
+            elif pos == ("left", "down"):
+                self.perform(["L'", "F", "U"])
+            elif pos == ("down", "front"):
+                self.perform(["D'", "L2"])
+            elif pos == ("front", "down"):
+                self.perform(["F", "L'"])
+            elif pos == ("down", "right"):
+                self.perform(["D2", "L2"])
+            elif pos == ("right", "down"):
+                self.perform(["D'", "F", "L'"])
+            elif pos == ("down", "back"):
+                self.perform(["D", "L2"])
+            elif pos == ("back", "down"):
+                self.perform(["B'", "L'"])
+            elif pos == ("up", "back"):
+                self.perform(["U'"])
+            elif pos == ("back", "up"):
+                self.perform(["B", "L"])
+            elif pos == ("up", "right"):
+                self.perform(["U2"])
+            elif pos == ("right", "up"):
+                self.perform(["R'", "F'", "U"])
+            elif pos == ("up", "front"):
+                self.perform(["U"])
+            elif pos == ("front", "up"):
+                self.perform(["F'", "L'"])
+            elif pos == ("left", "up"):
+                self.perform(["L", "F'", "D'", "L2"])
+        def solve_w_o():
+            pos = self.locate_edge(('w', 'o'))
+            if pos == ("front", "right"):
+                self.perform(["R'", "D'", "F2"])
+            elif pos == ("right", "front"):
+                self.perform(["F'"])
+            elif pos == ("front", "left"):
+                self.perform(["F'", "D", "R", "F'"])
+            elif pos == ("left", "front"):
+                self.perform(["F"])
+            elif pos == ("back", "right"):
+                self.perform(["R", "D'", "F2"])
+            elif pos == ("right", "back"):
+                self.perform(["R2", "F'"])
+            elif pos == ("back", "left"):
+                self.perform(["L'", "D", "F2", "L"])
+            elif pos == ("left", "back"):
+                self.perform(["L2", "F", "L2"])
+            elif pos == ("down", "left"):
+                self.perform(["D", "F2"])
+            elif pos == ("left", "down"):
+                self.perform(["L'", "F", "L"])
+            elif pos == ("down", "front"):
+                self.perform(["F2"])
+            elif pos == ("front", "down"):
+                self.perform(["D", "R", "F'"])
+            elif pos == ("down", "right"):
+                self.perform(["D'", "F2"])
+            elif pos == ("right", "down"):
+                self.perform(["R", "F'"])
+            elif pos == ("down", "back"):
+                self.perform(["D2", "F2"])
+            elif pos == ("back", "down"):
+                self.perform(["D'", "R", "F'"])
+            elif pos == ("up", "back"):
+                self.perform(["B2", "D2", "F2"])
+            elif pos == ("back", "up"):
+                self.perform(["B'", "R", "D'", "F2"])
+            elif pos == ("up", "right"):
+                self.perform(["R2", "D'", "F2"])
+            elif pos == ("right", "up"):
+                self.perform(["R'", "F'"])
+            elif pos == ("front", "up"):
+                self.perform(["F", "R'", "D'", "F2"])
+        def solve_w_g():
+            pos = self.locate_edge(('w', 'g'))
+            if pos == ("front", "right"):
+                self.perform(["R"])
+            elif pos == ("right", "front"):
+                self.perform(["R'", "D'", "F'", "R", "F"])
+            elif pos == ("front", "left"):
+                self.perform(["L", "D2", "R2", "L'"])
+            elif pos == ("left", "front"):
+                self.perform(["F'", "D", "R2", "F"])
+            elif pos == ("back", "right"):
+                self.perform(["R'"])
+            elif pos == ("right", "back"):
+                self.perform(["R", "D'", "F'", "R", "F"])
+            elif pos == ("back", "left"):
+                self.perform(["B2", "R'"])
+            elif pos == ("left", "back"):
+                self.perform(["B", "D'", "R2"])
+            elif pos == ("down", "left"):
+                self.perform(["D2", "R2"])
+            elif pos == ("left", "down"):
+                self.perform(["D'", "B", "R'"])
+            elif pos == ("down", "front"):
+                self.perform(["D", "R2"])
+            elif pos == ("front", "down"):
+                self.perform(["F'", "R", "F"])
+            elif pos == ("down", "right"):
+                self.perform(["R2"])
+            elif pos == ("right", "down"):
+                self.perform(["D", "B", "R'"])
+            elif pos == ("down", "back"):
+                self.perform(["D'", "R2"])
+            elif pos == ("back", "down"):
+                self.perform(["B", "R'"])
+            elif pos == ("up", "back"):
+                self.perform(["B2", "D'", "R2"])
+            elif pos == ("back", "up"):
+                self.perform(["B'", "R'"])
+            elif pos == ("right", "up"):
+                self.perform(["R", "B'", "D'", "R2"])
+        def solve_w_r():
+            pos = self.locate_edge(('w', 'r'))
+            if pos == ("front", "right"):
+                self.perform(["R'", "D", "B2", "R"])
+            elif pos == ("right", "front"):
+                self.perform(["R2", "B", "R2"])
+            elif pos == ("front", "left"):
+                self.perform(["L", "D'", "L'", "B2"])
+            elif pos == ("left", "front"):
+                self.perform(["L", "D'", "L'", "B2"])
+            elif pos == ("back", "right"):
+                self.perform(["R", "D", "R'", "B2"])
+            elif pos == ("right", "back"):
+                self.perform(["B"])
+            elif pos == ("back", "left"):
+                self.perform(["L'", "D'", "L", "B2"])
+            elif pos == ("left", "back"):
+                self.perform(["B'"])
+            elif pos == ("down", "left"):
+                self.perform(["D'", "B2"])
+            elif pos == ("left", "down"):
+                self.perform(["L", "B", "L'"])
+            elif pos == ("down", "front"):
+                self.perform(["D2", "B2"])
+            elif pos == ("front", "down"):
+                self.perform(["D", "R'", "B", "R"])
+            elif pos == ("down", "right"):
+                self.perform(["D", "B2"])
+            elif pos == ("right", "down"):
+                self.perform(["R'", "B", "R"])
+            elif pos == ("down", "back"):
+                self.perform(["B2"])
+            elif pos == ("back", "down"):
+                self.perform(["D'", "R'", "B", "R"])
+            elif pos == ("back", "up"):
+                self.perform(["B'", "R", "D", "R'", "B2"])
+        solve_w_b()
+        solve_w_o()
+        solve_w_g()
+        solve_w_r()
