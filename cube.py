@@ -156,45 +156,45 @@ class Cube():
         for move in moves:
             if move=="R":
                 self.right()
-            if move=="R2":
+            elif move=="R2":
                 self.right()
                 self.right()
-            if move=="R'":
+            elif move=="R'":
                 self.r_prime()
-            if move=="L":
+            elif move=="L":
                 self.left()
-            if move=="L2":
+            elif move=="L2":
                 self.left()
                 self.left()
-            if move=="L'":
+            elif move=="L'":
                 self.l_prime()
-            if move=="F":
+            elif move=="F":
                 self.front()
-            if move=="F2":
+            elif move=="F2":
                 self.front()
                 self.front()
-            if move=="F'":
+            elif move=="F'":
                 self.f_prime()
-            if move=="U":
+            elif move=="U":
                 self.up()
-            if move=="U2":
+            elif move=="U2":
                 self.up()
                 self.up()
-            if move=="U'":
+            elif move=="U'":
                 self.u_prime()
-            if move=="D":
+            elif move=="D":
                 self.down()
-            if move=="D2":
+            elif move=="D2":
                 self.down()
                 self.down()
-            if move=="D'":
+            elif move=="D'":
                 self.d_prime()
-            if move=="B":
+            elif move=="B":
                 self.back()
-            if move=="B2":
+            elif move=="B2":
                 self.back()
                 self.back()
-            if move=="B'":
+            elif move=="B'":
                 self.b_prime()
             print(move, end=" ")
         self.moves += len(moves)
@@ -203,62 +203,62 @@ class Cube():
     def locate_edge(self, cols):
         if self.state['front'][1][2] == cols[0] and self.state['right'][1][0] == cols[1]:
             return ("front", "right")
-        if self.state['front'][1][2] == cols[1] and self.state['right'][1][0] == cols[0]:
+        elif self.state['front'][1][2] == cols[1] and self.state['right'][1][0] == cols[0]:
             return ("right", "front")
 
-        if self.state['front'][1][0] == cols[0] and self.state['left'][1][2] == cols[1]:
+        elif self.state['front'][1][0] == cols[0] and self.state['left'][1][2] == cols[1]:
             return ("front", "left")
-        if self.state['front'][1][0] == cols[1] and self.state['left'][1][2] == cols[0]:
+        elif self.state['front'][1][0] == cols[1] and self.state['left'][1][2] == cols[0]:
             return ("left", "front")
 
-        if self.state['front'][0][1] == cols[0] and self.state['up'][2][1] == cols[1]:
+        elif self.state['front'][0][1] == cols[0] and self.state['up'][2][1] == cols[1]:
             return ("front", "up")
-        if self.state['front'][0][1] == cols[1] and self.state['up'][2][1] == cols[0]:
+        elif self.state['front'][0][1] == cols[1] and self.state['up'][2][1] == cols[0]:
             return ("up", "front")
 
-        if self.state['front'][2][1] == cols[0] and self.state['down'][0][1] == cols[1]:
+        elif self.state['front'][2][1] == cols[0] and self.state['down'][0][1] == cols[1]:
             return ("front", "down")
-        if self.state['front'][2][1] == cols[1] and self.state['down'][0][1] == cols[0]:
+        elif self.state['front'][2][1] == cols[1] and self.state['down'][0][1] == cols[0]:
             return ("down", "front")
 
-        if self.state['up'][1][2] == cols[0] and self.state['right'][0][1] == cols[1]:
+        elif self.state['up'][1][2] == cols[0] and self.state['right'][0][1] == cols[1]:
             return ("up", "right")
-        if self.state['up'][1][2] == cols[1] and self.state['right'][0][1] == cols[0]:
+        elif self.state['up'][1][2] == cols[1] and self.state['right'][0][1] == cols[0]:
             return ("right", "up")
 
-        if self.state['up'][1][0] == cols[0] and self.state['left'][0][1] == cols[1]:
+        elif self.state['up'][1][0] == cols[0] and self.state['left'][0][1] == cols[1]:
             return ("up", "left")
-        if self.state['up'][1][0] == cols[1] and self.state['left'][0][1] == cols[0]:
+        elif self.state['up'][1][0] == cols[1] and self.state['left'][0][1] == cols[0]:
             return ("left", "up")
 
-        if self.state['down'][1][2] == cols[0] and self.state['right'][2][1] == cols[1]:
+        elif self.state['down'][1][2] == cols[0] and self.state['right'][2][1] == cols[1]:
             return ("down", "right")
-        if self.state['down'][1][2] == cols[1] and self.state['right'][2][1] == cols[0]:
+        elif self.state['down'][1][2] == cols[1] and self.state['right'][2][1] == cols[0]:
             return ("right", "down")
 
-        if self.state['down'][1][0] == cols[0] and self.state['left'][2][1] == cols[1]:
+        elif self.state['down'][1][0] == cols[0] and self.state['left'][2][1] == cols[1]:
             return ("down", "left")
-        if self.state['down'][1][0] == cols[1] and self.state['left'][2][1] == cols[0]:
+        elif self.state['down'][1][0] == cols[1] and self.state['left'][2][1] == cols[0]:
             return ("left", "down")
 
-        if self.state['back'][1][2] == cols[0] and self.state['left'][1][0] == cols[1]:
+        elif self.state['back'][1][2] == cols[0] and self.state['left'][1][0] == cols[1]:
             return ("back", "left")
-        if self.state['back'][1][2] == cols[1] and self.state['left'][1][0] == cols[0]:
+        elif self.state['back'][1][2] == cols[1] and self.state['left'][1][0] == cols[0]:
             return ("left", "back")
 
-        if self.state['back'][1][0] == cols[0] and self.state['right'][1][2] == cols[1]:
+        elif self.state['back'][1][0] == cols[0] and self.state['right'][1][2] == cols[1]:
             return ("back", "right")
-        if self.state['back'][1][0] == cols[1] and self.state['right'][1][2] == cols[0]:
+        elif self.state['back'][1][0] == cols[1] and self.state['right'][1][2] == cols[0]:
             return ("right", "back")
 
-        if self.state['back'][0][1] == cols[0] and self.state['up'][0][1] == cols[1]:
+        elif self.state['back'][0][1] == cols[0] and self.state['up'][0][1] == cols[1]:
             return ("back", "up")
-        if self.state['back'][0][1] == cols[1] and self.state['up'][0][1] == cols[0]:
+        elif self.state['back'][0][1] == cols[1] and self.state['up'][0][1] == cols[0]:
             return ("up", "back")
 
-        if self.state['back'][2][1] == cols[0] and self.state['down'][2][1] == cols[1]:
+        elif self.state['back'][2][1] == cols[0] and self.state['down'][2][1] == cols[1]:
             return ("back", "down")
-        if self.state['back'][2][1] == cols[1] and self.state['down'][2][1] == cols[0]:
+        elif self.state['back'][2][1] == cols[1] and self.state['down'][2][1] == cols[0]:
             return ("down", "back")
 
     def randomize(self):
