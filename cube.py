@@ -7,6 +7,7 @@ import random
 from PIL import Image
 class Cube():
     faces = ['front', 'back', 'up', 'down', 'left', 'right']
+    moves = 0
     def __init__(self):
         self.reset()
     def reset(self):
@@ -16,6 +17,7 @@ class Cube():
                 'right':np.array([['g', 'g', 'g'], ['g', 'g', 'g'], ['g', 'g', 'g']]),
                 'back':np.array([['r', 'r', 'r'], ['r', 'r', 'r'], ['r', 'r', 'r']]),
                 'down':np.array([['y', 'y', 'y'], ['y', 'y', 'y'], ['y', 'y', 'y']])}
+        self.last_scramble = None
     def disp(self, face):
         def show(color):
             if color == 'r':
@@ -195,6 +197,7 @@ class Cube():
             if move=="B'":
                 self.b_prime()
             print(move, end=" ")
+        self.moves += len(moves)
         print()
 
     def locate_edge(self, cols):
@@ -255,8 +258,11 @@ class Cube():
 
         if self.state['back'][2][1] == cols[0] and self.state['down'][2][1] == cols[1]:
             return ("back", "down")
-        if self.state['front'][2][1] == cols[1] and self.state['down'][2][1] == cols[0]:
+        if self.state['back'][2][1] == cols[1] and self.state['down'][2][1] == cols[0]:
             return ("down", "back")
+
+    # def locate_corner(self, cols):
+
 
     def randomize(self):
         scramble = []
@@ -270,8 +276,10 @@ class Cube():
                     x = random.randint(0, 17)
                 scramble.append(moves[x])
         self.perform(scramble)
+        self.last_scramble = scramble
 
     def cross(self):
+        self.moves = 0
         def solve_w_b():
             pos = self.locate_edge(('w', 'b'))
             if pos == ("front", "right"):
@@ -305,7 +313,7 @@ class Cube():
             elif pos == ("down", "back"):
                 self.perform(["D", "L2"])
             elif pos == ("back", "down"):
-                self.perform(["B'", "L'"])
+                self.perform(["B'", "L"])
             elif pos == ("up", "back"):
                 self.perform(["U'"])
             elif pos == ("back", "up"):
@@ -413,7 +421,7 @@ class Cube():
             elif pos == ("front", "left"):
                 self.perform(["L", "D'", "L'", "B2"])
             elif pos == ("left", "front"):
-                self.perform(["L", "D'", "L'", "B2"])
+                self.perform(["F'", "D2", "F", "B2"])
             elif pos == ("back", "right"):
                 self.perform(["R", "D", "R'", "B2"])
             elif pos == ("right", "back"):
@@ -425,7 +433,7 @@ class Cube():
             elif pos == ("down", "left"):
                 self.perform(["D'", "B2"])
             elif pos == ("left", "down"):
-                self.perform(["L", "B", "L'"])
+                self.perform(["L", "B'", "L'"])
             elif pos == ("down", "front"):
                 self.perform(["D2", "B2"])
             elif pos == ("front", "down"):
@@ -444,3 +452,57 @@ class Cube():
         solve_w_o()
         solve_w_g()
         solve_w_r()
+
+    def verify_cross(self):
+        return self.locate_edge(("w", "o")) == ("up", "front") and self.locate_edge(("w", "g")) == ("up", "right") and self.locate_edge(("w", "r")) == ("up", "back") and self.locate_edge(("w", "b")) == ("up", "left")
+
+    def solve_first_layer_corners(self):
+        def solve_w_o_b():
+            if self.state["front"][0][0] == 'w' and self.state["left"][0][2] == 'o' and self.state["up"][2][0] == 'b':
+                self.perform(["F'", "D'", "F", "D", "F'", "D'", "F"])
+            elif self.state["front"][0][0] == 'b' and self.state["left"][0][2] == 'w' and self.state["up"][2][0] == 'o':
+                self.perform(["L", "D", "L'", "D'", "L", "D", "L'"])
+            elif self.state["front"][0][2] == 'w' and self.state["right"][0][0] == 'b' and self.state["up"][2][2] == 'o':
+                self.perform(["F", "D", "F'", "D", "F'", "D", "F"])
+            elif self.state["front"][0][2] == 'o' and self.state["right"][0][0] == 'w' and self.state["up"][2][2] == 'b':
+                self.perform(["R'", "L", "D'", "L'", "R"])
+            elif self.state["front"][0][2] == 'b' and self.state["right"][0][0] == 'o' and self.state["up"][2][2] == 'w':
+                self.perform(["R'", "D2", "R", "F'", "D", "F"])
+            elif self.state["up"][0][2] == 'o' and self.state["right"][0][2] == 'w' and self.state["back"][0][0] == 'b':
+                self.perform(["B'", "D2", "B", "F'", "D2", "F", "D", "F'", "D'", "F"])
+            elif self.state["up"][0][2] == 'w' and self.state["right"][0][2] == 'b' and self.state["back"][0][0] == 'o':
+                self.perform(["B'", "D2", "B", "L", "D", "L'"])
+            elif self.state["up"][0][2] == 'b' and self.state["right"][0][2] == 'o' and self.state["back"][0][0] == 'w':
+                self.perform(["B'", "D'", "B", "L", "D'", "L'"])
+            elif self.state["up"][0][0] == 'o' and self.state["left"][0][0] == 'b' and self.state["back"][0][2] == 'w':
+                self.perform(["B", "F'", "D", "F", "B'"])
+            elif self.state["up"][0][0] == 'b' and self.state["left"][0][0] == 'w' and self.state["back"][0][2] == 'o':
+                self.perform(["L'", "D", "F'", "D'", "F2", "L", "F'"])
+            elif self.state["up"][0][0] == 'w' and self.state["left"][0][0] == 'o' and self.state["back"][0][2] == 'b':
+                self.perform(["B", "D", "B'", "F'", "D'", "F"])
+            elif self.state["front"][2][0] == 'o' and self.state["left"][2][2] == 'w' and self.state["down"][0][0] == 'b':
+                self.perform(["D'", "F'", "D", "F"])
+            elif self.state["front"][2][0] == 'w' and self.state["left"][2][2] == 'b' and self.state["down"][0][0] == 'o':
+                self.perform(["F'", "D'", "F"])
+            elif self.state["front"][2][0] == 'b' and self.state["left"][2][2] == 'o' and self.state["down"][0][0] == 'w':
+                self.perform(["F'", "D2", "F", "D", "F'", "D'", "F"])
+            elif self.state["front"][2][2] == 'w' and self.state["right"][2][0] == 'o' and self.state["down"][0][2] == 'b':
+                self.perform(["D2", "F'", "D", "F"])
+            elif self.state["front"][2][2] == 'o' and self.state["right"][2][0] == 'b' and self.state["down"][0][2] == 'w':
+                self.perform(["R'", "D2", "R", "F'", "D'", "F"])
+            elif self.state["front"][2][2] == 'b' and self.state["right"][2][0] == 'w' and self.state["down"][0][2] == 'o':
+                self.perform(["L", "D'", "L'"])
+            elif self.state["right"][2][2] == 'b' and self.state["down"][2][2] == 'o' and self.state["back"][2][0] == 'w':
+                self.perform(["L", "D2", "L'"])
+            elif self.state["right"][2][2] == 'w' and self.state["down"][2][2] == 'b' and self.state["back"][2][0] == 'o':
+                self.perform(["F'", "D2", "F"])
+            elif self.state["right"][2][2] == 'o' and self.state["down"][2][2] == 'w' and self.state["back"][2][0] == 'b':
+                self.perform(["D2", "F'", "D2", "F", "D", "F'", "D'", "F"])
+            elif self.state["left"][2][0] == 'o' and self.state["down"][2][0] == 'b' and self.state["back"][2][2] == 'w':
+                self.perform(["F'", "D", "F"])
+            elif self.state["left"][2][0] == 'w' and self.state["down"][2][0] == 'o' and self.state["back"][2][2] == 'b':
+                self.perform(["D", "F'", "D'", "F"])
+            elif self.state["left"][2][0] == 'b' and self.state["down"][2][0] == 'w' and self.state["back"][2][2] == 'o':
+                self.perform(["D", "F'", "D2", "F", "D", "F'", "D'", "F"])
+
+        solve_w_o_b()
