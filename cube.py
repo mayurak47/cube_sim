@@ -122,6 +122,28 @@ class Cube():
         self.state['back'][:, 2] = temp['back'][0, :]
         self.state['back'][2, :] = temp['back'][:, 2][::-1]
 
+    def up_down(self):
+        n = copy.deepcopy(self)
+        n.perform(["F2"], False)
+        self.state["front"] = copy.deepcopy(n.state["front"])
+        n.perform(["F2"], False)
+        n.perform(["L2"], False)
+        self.state["right"] = copy.deepcopy(n.state["left"])
+        n.perform(["L2"], False)
+        n.perform(["R2"], False)
+        self.state["left"] = copy.deepcopy(n.state["right"])
+        n.perform(["R2"], False)
+        n.perform(["B2"], False)
+        self.state["back"] = copy.deepcopy(n.state["back"])
+        n.perform(["B2"], False)
+        n.perform(["D2"], False)
+        self.state["up"] = copy.deepcopy(n.state["down"])
+        n.perform(["D2"], False)
+        n.perform(["U2"], False)
+        self.state["down"] = copy.deepcopy(n.state["up"])
+        n.perform(["U2"], False)
+
+
     def r_prime(self):
         self.right()
         self.right()
@@ -152,7 +174,7 @@ class Cube():
         self.back()
         self.back()
 
-    def perform(self, moves):
+    def perform(self, moves, param=True):
         for move in moves:
             if move=="R":
                 self.right()
@@ -196,9 +218,11 @@ class Cube():
                 self.back()
             elif move=="B'":
                 self.b_prime()
-            print(move, end=" ")
+            if param==True:
+                print(move, end=" ")
         self.moves += len(moves)
-        print()
+        if param == True:
+            print()
 
     def locate_edge(self, cols):
         if self.state['front'][1][2] == cols[0] and self.state['right'][1][0] == cols[1]:
