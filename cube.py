@@ -286,6 +286,20 @@ class Cube():
             return ("down", "back")
 
     def randomize(self):
+        def opp(x):
+            if x == 'F':
+                return 'B'
+            if x == 'B':
+                return 'F'
+            if x == 'R':
+                return 'L'
+            if x == 'L':
+                return 'R'
+            if x == 'U':
+                return 'D'
+            if x == 'D':
+                return 'U'
+
         scramble = []
         moves = ['R', 'L', 'U', 'D', 'F', 'B', 'R2', "R'", 'L2', "L'", 'U2', "U'", 'D2', "D'", 'F2', "F'", 'B2', "B'"]
         for i in range(20):
@@ -293,7 +307,7 @@ class Cube():
             if not scramble:
                 scramble.append(moves[x])
             else:
-                while scramble[i-1][0] == moves[x][0]:
+                while ((scramble[i-1][0] == moves[x][0]) or (scramble[i-1][0] == opp(moves[x][0]))):
                     x = random.randint(0, 17)
                 scramble.append(moves[x])
         self.perform(scramble)
@@ -819,20 +833,60 @@ class Cube():
                 else:
                     self.perform(["U'", "R'", "F'", "L", "F", "R", "F'", "L'", "F"])
             else:
-                while not (self.state['up'][0][0] == 'y' and self.state['up'][2][2] == 'y'):
+                while not (self.state['up'][0][0] == 'y' and self.state['up'][2][2] == 'y' and self.state['left'][0][2] == 'y'):
                     self.perform(["U"])
                 self.perform(["R'", "F'", "L'", "F", "R" ,"F'", "L", "F"])
 
     def verify_oll(self):
         return (self.state["up"] == np.array([['y', 'y', 'y'], ['y', 'y', 'y'], ['y', 'y', 'y']])).all()
 
+    def pll(self):
+        while not ((self.state["front"][0][0] == self.state["front"][0][2]) and (self.state["right"][0][0] == self.state["right"][0][2]) and (self.state["back"][0][0] == self.state["back"][0][2]) and (self.state["left"][0][0] == self.state["left"][0][2])):
+            for i in range(3):
+                if self.state['back'][0][0] == self.state['back'][0][2]:
+                    break
+                self.perform(["U"])
+            self.perform(["R'", "F", "R'", "B2", "R", "F'", "R'", "B2", "R2"])
+        while not ((self.state["front"][0][0] == 'o' and self.state["front"][0][2] == 'o') and (self.state["right"][0][0] == 'b' and self.state["right"][0][2] == 'b') and (self.state["back"][0][0] == 'r' and self.state["back"][0][2] == 'r') and (self.state["left"][0][0] == 'g' and self.state["left"][0][2] == 'g')):
+            self.perform(["U"])
+
+        cnt = int(self.state["front"][0][1] == 'o') + int(self.state["right"][0][1] == 'b') + int(self.state["back"][0][1] == 'r') + int(self.state["left"][0][1] == 'g')
+        if cnt == 0:
+            if self.state["front"][0][1] == 'r':
+                self.perform(["R2", "L2", "D", "R2", "L2", "U2", "R2", "L2", "D", "R2", "L2"])
+            elif self.state["front"][0][1] == 'b':
+                self.perform(["R2", "L2", "D", "R2", "L2", "U", "R'", "L", "F2", "R2", "L2", "B2", "R'", "L", "U2"])
+            elif self.state["front"][0][1] == 'g':
+                self.perform(["U", "R2", "L2", "D", "R2", "L2", "U", "R'", "L", "F2", "R2", "L2", "B2", "R'", "L", "U"])
+        elif cnt == 1:
+            while not ((self.state["back"][0][0] == self.state["back"][0][1]) and (self.state["back"][0][1] == self.state["back"][0][2])):
+                self.perform(["U"])
+            if self.state["left"][0][2] == self.state["front"][0][1]:
+                self.perform(["R2", "U", "R", "U", "R'", "U'", "R'", "U'", "R'", "U", "R'"])
+            else:
+                self.perform(["R", "U'", "R", "U", "R", "U", "R", "U'", "R'", "U'", "R2"])
+            while not self.state["front"][0][0] == 'o':
+                self.perform(["U"])
+
+    def verify_pll(self):
+        return (self.state["front"][0] == np.array(['o', 'o', 'o'])).all() and (self.state["left"][0] == np.array(['g', 'g', 'g'])).all() and (self.state["back"][0] == np.array(['r', 'r', 'r'])).all() and (self.state["right"][0] == np.array(['b', 'b', 'b'])).all()
+
+
     def solve(self):
+        print("\n---Cross---\n")
         self.cross()
         assert(self.verify_cross())
+        print("\n---First layer corners---\n")
         self.first_layer_corners()
         assert(self.verify_corners())
+        print("\n---Second layer---")
+        print("Rotate cube\n")
         self.up_down()
         self.second_layer()
         assert(self.verify_f2l())
+        print("\n---OLL---\n")
         self.oll()
         assert(self.verify_oll())
+        print("\n---PLL---\n")
+        self.pll()
+        assert(self.verify_pll())
