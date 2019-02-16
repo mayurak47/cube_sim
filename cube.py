@@ -663,108 +663,108 @@ class Cube():
             pos = self.locate_edge(('g', 'o'))
             if pos == ("front", "left"):
                 self.perform(["F", "U'", "F'", "U", "L'", "U2", "L", "U2", "L'", "U", "L"])
-            if pos == ("front", "right"):
+            elif pos == ("front", "right"):
                 self.perform(["R", "U'", "R'", "U'", "F'", "U", "F", "U", "L'", "U", "L", "U", "F", "U'", "F'"])
-            if pos == ("right", "front"):
+            elif pos == ("right", "front"):
                 self.perform(["F2", "U2", "F2", "U2", "F2"])
-            if pos == ("back", "right"):
+            elif pos == ("back", "right"):
                 self.perform(["B", "U'", "B'", "U'", "R'", "U", "R", "U", "F", "U'", "F'", "U'", "L'", "U", "L"])
-            if pos == ("right", "back"):
+            elif pos == ("right", "back"):
                 self.perform(["B", "U'", "B'", "U'", "R'", "U", "R", "U2", "L'", "U", "L", "U", "F", "U'", "F'"])
-            if pos == ("back", "left"):
+            elif pos == ("back", "left"):
                 self.perform(["B'", "U", "B", "U", "L", "U'", "L'", "U'", "F", "U'", "F'", "U'", "L'", "U", "L"])
-            if pos == ("left", "back"):
+            elif pos == ("left", "back"):
                 self.perform(["L2", "U2", "L2", "U2", "L2"])
-            if pos == ("front", "up"):
+            elif pos == ("front", "up"):
                 self.perform(["U2", "F", "U'", "F'", "U'", "L'", "U", "L"])
-            if pos == ("left", "up"):
+            elif pos == ("left", "up"):
                 self.perform(["U", "F", "U'", "F'", "U'", "L'", "U", "L"])
-            if pos == ("back", "up"):
+            elif pos == ("back", "up"):
                 self.perform(["F", "U'", "F'", "U'", "L'", "U", "L"])
-            if pos == ("right", "up"):
+            elif pos == ("right", "up"):
                 self.perform(["U'", "F", "U'", "F'", "U'", "L'", "U", "L"])
-            if pos == ("up", "front"):
+            elif pos == ("up", "front"):
                 self.perform(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
-            if pos == ("up", "left"):
+            elif pos == ("up", "left"):
                 self.perform(["U2", "L'", "U", "L", "U", "F", "U'", "F'"])
-            if pos == ("up", "back"):
+            elif pos == ("up", "back"):
                 self.perform(["U", "L'", "U", "L", "U", "F", "U'", "F'"])
-            if pos == ("up", "right"):
+            elif pos == ("up", "right"):
                 self.perform(["L'", "U", "L", "U", "F", "U'", "F'"])
 
         def solve_b_o():
             pos = self.locate_edge(('b', 'o'))
             if pos == ("front", "right"):
                 self.perform(["R", "U'", "R'", "U", "F'", "U2", "F", "U2", "F'", "U", "F"])
-            if pos == ("back", "right"):
+            elif pos == ("back", "right"):
                 self.perform(["B", "U'", "B'", "U'", "R'", "U", "R", "U", "F'", "U", "F", "U", "R", "U'", "R'"])
-            if pos == ("right", "back"):
+            elif pos == ("right", "back"):
                 self.perform(["R2", "U2", "R2", "U2", "R2"])
-            if pos == ("back", "left"):
+            elif pos == ("back", "left"):
                 self.perform(["B'", "U", "B", "U", "L", "U'", "L'", "U'", "F'", "U", "F", "U", "R", "U'", "R'"])
-            if pos == ("left", "back"):
+            elif pos == ("left", "back"):
                 self.perform(["B'", "U", "B", "U", "L", "U'", "L'", "U2", "R", "U'", "R'", "U'", "F'", "U", "F"])
-            if pos == ("front", "up"):
+            elif pos == ("front", "up"):
                 self.perform(["U2", "F'", "U", "F", "U", "R", "U'", "R'"])
-            if pos == ("left", "up"):
+            elif pos == ("left", "up"):
                 self.perform(["U", "F'", "U", "F", "U", "R", "U'", "R'"])
-            if pos == ("back", "up"):
+            elif pos == ("back", "up"):
                 self.perform(["F'", "U", "F", "U", "R", "U'", "R'"])
-            if pos == ("right", "up"):
+            elif pos == ("right", "up"):
                 self.perform(["U'", "F'", "U", "F", "U", "R", "U'", "R'"])
-            if pos == ("up", "front"):
+            elif pos == ("up", "front"):
                 self.perform(["U", "R", "U'", "R'", "U'", "F'", "U", "F"])
-            if pos == ("up", "left"):
+            elif pos == ("up", "left"):
                 self.perform(["R", "U'", "R'", "U'", "F'", "U", "F"])
-            if pos == ("up", "back"):
+            elif pos == ("up", "back"):
                 self.perform(["U'", "R", "U'", "R'", "U'", "F'", "U", "F"])
-            if pos == ("up", "right"):
+            elif pos == ("up", "right"):
                 self.perform(["U2", "R", "U'", "R'", "U'", "F'", "U", "F"])
 
         def solve_b_r():
             pos = self.locate_edge(('b', 'r'))
             if pos == ("back", "right"):
                 self.perform(["B", "U'", "B'", "U'", "R'", "U", "R", "U'", "B", "U'", "B'", "U'", "R'", "U", "R"])
-            if pos == ("back", "left"):
+            elif pos == ("back", "left"):
                 self.perform(["B'", "U", "B", "U", "L", "U'", "L'", "U", "B", "U'", "B'", "U'", "R'", "U", "R"])
-            if pos == ("left", "back"):
+            elif pos == ("left", "back"):
                 self.perform(["B2", "U2", "B2", "U2", "B2"])
-            if pos == ("front", "up"):
+            elif pos == ("front", "up"):
                 self.perform(["B", "U'", "B'", "U'", "R'", "U", "R"])
-            if pos == ("left", "up"):
+            elif pos == ("left", "up"):
                 self.perform(["U'", "B", "U'", "B'", "U'", "R'", "U", "R"])
-            if pos == ("back", "up"):
+            elif pos == ("back", "up"):
                 self.perform(["U2", "B", "U'", "B'", "U'", "R'", "U", "R"])
-            if pos == ("right", "up"):
+            elif pos == ("right", "up"):
                 self.perform(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
-            if pos == ("up", "front"):
+            elif pos == ("up", "front"):
                 self.perform(["U", "R'", "U", "R", "U", "B", "U'", "B'"])
-            if pos == ("up", "left"):
+            elif pos == ("up", "left"):
                 self.perform(["R'", "U", "R", "U", "B", "U'", "B'"])
-            if pos == ("up", "back"):
+            elif pos == ("up", "back"):
                 self.perform(["U'", "R'", "U", "R", "U", "B", "U'", "B'"])
-            if pos == ("up", "right"):
+            elif pos == ("up", "right"):
                 self.perform(["U2", "R'", "U", "R", "U", "B", "U'", "B'"])
 
         def solve_g_r():
             pos = self.locate_edge(('g', 'r'))
             if pos == ("back", "left"):
                 self.perform(["B'", "U", "B", "U'", "L", "U2", "L'", "U2", "L", "U'", "L'"])
-            if pos == ("front", "up"):
+            elif pos == ("front", "up"):
                 self.perform(["B'", "U", "B", "U", "L", "U'", "L'"])
-            if pos == ("left", "up"):
+            elif pos == ("left", "up"):
                 self.perform(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
-            if pos == ("back", "up"):
+            elif pos == ("back", "up"):
                 self.perform(["U2", "B'", "U", "B", "U", "L", "U'", "L'"])
-            if pos == ("right", "up"):
+            elif pos == ("right", "up"):
                 self.perform(["U", "B'", "U", "B", "U", "L", "U'", "L'"])
-            if pos == ("up", "front"):
+            elif pos == ("up", "front"):
                 self.perform(["U'", "L", "U'", "L'", "U'", "B'", "U", "B"])
-            if pos == ("up", "left"):
+            elif pos == ("up", "left"):
                 self.perform(["U2", "L", "U'", "L'", "U'", "B'", "U", "B"])
-            if pos == ("up", "back"):
+            elif pos == ("up", "back"):
                 self.perform(["U", "L", "U'", "L'", "U'", "B'", "U", "B"])
-            if pos == ("up", "right"):
+            elif pos == ("up", "right"):
                 self.perform(["L", "U'", "L'", "U'", "B'", "U", "B"])
 
         solve_g_o()
@@ -774,3 +774,65 @@ class Cube():
 
     def verify_f2l(self):
         return (self.state["front"][1:2] == np.array([['o', 'o', 'o'], ['o', 'o', 'o']])).all() and (self.state["left"][1:2] == np.array([['g', 'g', 'g'], ['g', 'g', 'g']])).all() and (self.state["back"][1:2] == np.array([['r', 'r', 'r'], ['r', 'r', 'r']])).all() and (self.state["right"][1:2] == np.array([['b', 'b', 'b'], ['b', 'b', 'b']])).all()
+
+    def oll(self):
+        cnt = int(self.state['up'][0][1]=='y') + int(self.state['up'][1][2]=='y') + int(self.state['up'][2][1]=='y') + int(self.state['up'][1][0]=='y')
+        while(cnt != 4):
+            if cnt == 0:
+                self.perform(["F", "U", "R", "U'", "R'", "F'"])
+            elif cnt == 2:
+                if self.state['up'][1][0] == 'y' and self.state['up'][1][2] == 'y':
+                    self.perform(["F", "R", "U", "R'", "U'", "F'"])
+                elif self.state['up'][0][1] == 'y' and self.state['up'][2][1] == 'y':
+                    self.perform(["U", "F", "R", "U", "R'", "U'", "F'"])
+                elif self.state['up'][0][1] == 'y' and self.state['up'][1][0] == 'y':
+                    self.perform(["F", "U", "R", "U'", "R'", "F'"])
+                elif self.state['up'][0][1] == 'y' and self.state['up'][1][2] == 'y':
+                    self.perform(["U'", "F", "U", "R", "U'", "R'", "F'"])
+                elif self.state['up'][2][1] == 'y' and self.state['up'][1][2] == 'y':
+                    self.perform(["U2", "F", "U", "R", "U'", "R'", "F'"])
+                elif self.state['up'][1][0] == 'y' and self.state['up'][2][1] == 'y':
+                    self.perform(["U", "F", "U", "R", "U'", "R'", "F'"])
+            cnt = int(self.state['up'][0][1]=='y') + int(self.state['up'][1][2]=='y') + int(self.state['up'][2][1]=='y') + int(self.state['up'][1][0]=='y')
+
+        cnt = int(self.state['up'][0][0]=='y') + int(self.state['up'][0][2]=='y') + int(self.state['up'][2][0]=='y') + int(self.state['up'][2][2]=='y')
+        if cnt == 0:
+            while not (self.state['front'][0][2] == 'y' and self.state['back'][0][0] == 'y'):
+                self.perform(["U"])
+            if self.state['front'][0][0] == 'y' :
+                self.perform(["F", "R", "U", "R'", "U'", "R", "U", "R'", "U'", "R", "U", "R'", "U'", "F'"])
+            else:
+                self.perform(["R", "U2", "R2", "U'", "R2", "U'", "R2", "U2", "R"])
+        elif cnt == 1:
+            while self.state['up'][2][0] != 'y':
+                self.perform(["U"])
+            if self.state['front'][0][2] == 'y':
+                self.perform(["R", "U", "R'", "U", "R", "U2", "R'"])
+            else:
+                self.perform(["U", "R'", "U'", "R", "U'", "R'", "U2", "R"])
+        elif cnt == 2:
+            if (self.state['up'][0][0] == 'y' and self.state['up'][0][2] == 'y') or (self.state['up'][0][2] == 'y' and self.state['up'][2][2] == 'y') or (self.state['up'][2][2] == 'y' and self.state['up'][2][0] == 'y') or (self.state['up'][0][0] == 'y' and self.state['up'][2][0] == 'y'):
+                while not (self.state['up'][0][0] == 'y' and self.state['up'][0][2] == 'y'):
+                    self.perform(["U"])
+                if self.state['front'][0][0] == 'y' and self.state['front'][0][2] == 'y':
+                    self.perform(["R2", "D", "R'", "U2", "R", "D'", "R'", "U2", "R'"])
+                else:
+                    self.perform(["U'", "R'", "F'", "L", "F", "R", "F'", "L'", "F"])
+            else:
+                while not (self.state['up'][0][0] == 'y' and self.state['up'][2][2] == 'y'):
+                    self.perform(["U"])
+                self.perform(["R'", "F'", "L'", "F", "R" ,"F'", "L", "F"])
+
+    def verify_oll(self):
+        return (self.state["up"] == np.array([['y', 'y', 'y'], ['y', 'y', 'y'], ['y', 'y', 'y']])).all()
+
+    def solve(self):
+        self.cross()
+        assert(self.verify_cross())
+        self.first_layer_corners()
+        assert(self.verify_corners())
+        self.up_down()
+        self.second_layer()
+        assert(self.verify_f2l())
+        self.oll()
+        assert(self.verify_oll())
