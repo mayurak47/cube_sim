@@ -435,3 +435,30 @@ def bfs(src, dst):
     print()
     toc = time.time()
     print(toc-tic)
+
+def __main__():
+    a = Cube()
+    b = Cube()
+    print("Enter moves, terminate w/ -1")
+    l = []
+    x = input()
+    while x!='-1':
+        l.append(x)
+        x = input()
+    for elem in l:
+        if elem=='R':
+            b.right()
+        elif elem=='L':
+            b.left()
+        elif elem=='F':
+            b.front()
+        elif elem=='D':
+            b.down()
+        elif elem=='U':
+            b.up()
+        else:
+            b.back()
+    bfs(b, a)
+
+if __name__=="__main__":
+    __main__()
