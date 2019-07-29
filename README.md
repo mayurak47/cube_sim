@@ -1,1 +1,1 @@
-cube.py is a program that can solve the 3x3 Rubik's cube by the CFOP method and display all its faces at any point of time, while cube_2x2.py uses a graph-theoretic approach to find the optimal solution.
+cube.py is a program that can solve the 3x3 Rubik's cube by the CFOP method and display all its faces at any point of time, while cube_2x2.py uses a graph-theoretic approach to find the optimal solution for a 2x2 cube.
