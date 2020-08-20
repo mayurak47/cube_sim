@@ -1,12 +1,14 @@
 import copy
 import time
 import numpy as np
+
+#class for each face of cube
 class Face:
     def __init__(self, color=None):
         self.f = []
         if not color:
             print("Enter colors - ")
-            for i in range(2):
+            for _ in range(2):
                 x = input()
                 x = x.split(" ")
                 self.f.append(x)
@@ -29,10 +31,11 @@ class Face:
         h = 31*h+ord(self.f[1][1])
         return h
 
+#class consisting of 6 faces methods implementing various moves
 class Cube:
     facecodes = ['f', 'l', 'b', 'r', 'u', 'd']
     facenames = ["Front", "Left", "Back", "Right", "Up", "Down"]
-    # faces = {}
+
     def __init__(self, cube=None):
         self.faces = {}
         if not cube:
@@ -60,11 +63,16 @@ class Cube:
         for face in self.facecodes:
             h = 31*h + self.faces[face].__hash__()
         return h
+
+    #display cube with characters representing colors
     def display(self):
-        for face in self.facecodes:
-            print(face)
-            self.faces[face].disp()
+        for ind in range(6):
+        # for face in self.facecodes:
+            print(self.facenames[ind].capitalize())
+            self.faces[self.facecodes[ind]].disp()
             print()
+
+    #implement the various moves
     def right(self):
         temp = copy.deepcopy(self.faces)
         self.faces['u'].f[:,1] = temp['f'].f[:,1]
@@ -126,6 +134,69 @@ class Cube:
         self.faces['b'].f[1][1] = temp['b'].f[0][1]
         self.faces['b'].f[1][0] = temp['b'].f[1][1]
 
+    #perform a sequence of moves
+    def perform(self, moves, param=True):
+        for move in moves:
+            if move=="R":
+                self.right()
+            elif move=="R2":
+                self.right()
+                self.right()
+            elif move=="R'":
+                self.right()
+                self.right()
+                self.right()
+            elif move=="L":
+                self.left()
+            elif move=="L2":
+                self.left()
+                self.left()
+            elif move=="L'":
+                self.left()
+                self.left()
+                self.left()
+            elif move=="F":
+                self.front()
+            elif move=="F2":
+                self.front()
+                self.front()
+            elif move=="F'":
+                self.front()
+                self.front()
+                self.front()
+            elif move=="U":
+                self.up()
+            elif move=="U2":
+                self.up()
+                self.up()
+            elif move=="U'":
+                self.up()
+                self.up()
+                self.up()
+            elif move=="D":
+                self.down()
+            elif move=="D2":
+                self.down()
+                self.down()
+            elif move=="D'":
+                self.down()
+                self.down()
+                self.down()
+            elif move=="B":
+                self.back()
+            elif move=="B2":
+                self.back()
+                self.back()
+            elif move=="B'":
+                self.back()
+                self.back()
+                self.back()
+            if param==True:
+                print(move, end=" ")
+        if param == True:
+            print()
+
+#create duplicate cube given a cube
 def newCube(cube):
     x = Cube()
     x.faces['f'] = cube.faces['f']
@@ -136,6 +207,7 @@ def newCube(cube):
     x.faces['d'] = cube.faces['d']
     return x
 
+#dynamically generate neighbors of a cube state
 def neighbors(cube):
     # tic = time.time()
     # cube.display()
@@ -232,6 +304,7 @@ def neighbors(cube):
     ls.append(temp)
     return ls
 
+#perform bidirectional BFS to find optimal path between two cube states
 def bfs(src, dst):
     tic = time.time()
     visiteds = set()
@@ -434,7 +507,7 @@ def bfs(src, dst):
 
     print()
     toc = time.time()
-    print(toc-tic)
+    print(toc-tic, "seconds")
 
 def __main__():
     a = Cube()
